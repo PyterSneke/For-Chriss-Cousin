@@ -1,0 +1,65 @@
+#include <iostream> //cpp version of #include <stdio.h> 
+
+//concept = find the number of years that it takes for starting point # to get to the
+//end point number with the formula of n/3 for born and n/4 for death
+int main(){
+
+    int start; //takes in the input for the starting population 
+    int end;   //takes in the input for the ending population 
+    int new_llamas;  //variable for the formula n/3 for how many new llamas will be born every year
+    int dead_llamas;  //variable for the formula n/4 for how many llamas will die every year
+    int llama_calc;  //variable to store our equation for the llama population for every year (will make more sense once we go down the code)
+    int years = 0; //the starting year is set to zero bc, well, I mean it's the start lol
+
+    do{
+        std::cout << "Starting point: ";  //"std::cout <<" is just C++ way of "printf()"
+        std::cin >> start;  //"std::cin >>" is just C++ way of "scanf()" or taking in user input
+    }while(start < 9);
+    /*First we start off with a do while loop to ask the user how many llamas they will be starting
+    off with. We use a do while loop to ask for the user input until they input a number that 
+    is equal to or bigger than 9 since as the "Implementation Details" says if you start off 
+    with less than 9, then the llama population will not grow.*/
+
+    do{
+        std::cout << "Ending point: "; 
+        std::cin >> end; 
+    }while(end < start);
+    /*Next, we ask for the ending point. We want to repeat this code as long as the end input is 
+    less than the start value because we want our llama population to grow. We are trying to see
+    how many years it'll take for the llama population to grow to a certain size, NOT how long 
+    it'll be before it dimishes. */
+
+    new_llamas = start/3;  //the formula for new llamas for every year
+    dead_llamas = start/4;  //the formula for dead llamas for every year
+    
+    if(start == end){
+        std::cout << "Years: " << years; 
+    }
+    /*so for this line of code, I just implemented it bc I want to code to say "Years" as zero 
+    if the starting population is the same as the ending population*/
+
+    else{  //if the starting point is less than the ending point (as it should be, we then execute this section of the code)
+        years+=1;  /*"years+=1" is the same as "years = years + 1". We'll first increment the years from 0 to 1 because as we initiate this 
+        code, that means a year must pass in order for us to use the formulas n/3 and n/4. */
+        llama_calc = start + new_llamas - dead_llamas; /*In plain English, this means, 
+        every year, the llama population will be what the starting point will be + the new llama
+        tha are born while we take out the dead ones.*/
+
+        while(end > llama_calc){ /*I guess this would be the most complex part of the code but,
+            bear with me hear, it's not as complicated as you may think it would be at first glance.
+            We want to use a while loop to say if the ending population that the user has entered is 
+            greater than what the first llama population will be after the first year, then we want 
+            to repeat the code until the llama population either meets or becomes greater than the 
+            ending population that the user wanted.*/
+            years+=1;  //we want to increment the year by +1 again because a new year has started
+            start = llama_calc; //Now, we want to say that the new starting population is the same as what the ending population was last year. 
+            new_llamas = start/3; //Since we have a new starting population value, we must also get a new formula for how many new llamas will be born based on the new starting point. 
+            dead_llamas = start/4;  //Same goes for how many llamas will die each year. 
+            llama_calc = start + new_llamas - dead_llamas; //we then calculate for the new size of the llama population with our new variables. 
+        }//once the llama calculation becomes greater than the ending size, the code will come out of the while loop with the year value we wanted. 
+
+        std::cout << "Years: " << years;  //now at the end, we have the output we want. 
+    }
+    
+    return 0; 
+}
